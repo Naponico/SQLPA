@@ -1,0 +1,21 @@
+select count(*) as "Nombre de tests" from test;
+
+select notation.score,student.name,student.firstname from notation inner join student on notation.numstud = student.numstud;
+
+select notation.score,student.name,student.firstname,matter.wording from notation inner join student on notation.numstud = student.numstud join test on notation.numtest = test.numtest join matter on test.codemat = matter.codemat
+
+select * from notation WHERE notation.score >= 10
+
+select student.name,student.firstname from student join notation on student.numstud=notation.numstud where notation.score>=20
+
+select student.firstname,student.name,IFNULL((select Round(sum(score)/count(score)) from notation where student.numstud = notation.numstud),"Pas assez de données") as "Note moyenne" from student;
+
+select * from test where test.testdate BETWEEN '2014-01-01' and '2014-06-30'
+
+select test.numtest,test.testdate,test.place,matter.wording from test join matter on matter.codemat = test.codemat
+
+select student.firstname,student.name,IFNULL((select Round(sum(score)/count(score)) from notation where student.numstud = notation.numstud),0) as "Note_moyenne" from student ORDER BY Note_moyenne DESC
+
+select matter.wording,IFNULL((select avg(score) from notation join test on notation.numtest=test.numtest AND test.codemat=matter.codemat AND (select count(test.codemat) from test where test.codemat=matter.codemat)>1),"Pas assez de test") as "Note_Moyenne" from matter
+
+select test.numtest,IFNULL((select Round(sum(score)/count(score)) from notation where test.numtest = notation.numtest AND (select count(notation.numstud) from notation where notation.numtest=test.numtest)<6),CONCAT("trop d'eleve : ",(select count(numstud) from notation where notation.numtest=test.numtest))) as "Note_Moyenne" from test

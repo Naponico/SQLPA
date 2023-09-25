@@ -1,0 +1,44 @@
+DROP DATABASE IF EXISTS noteDB;
+CREATE DATABASE noteDB;
+
+DROP TABLE IF EXISTS noteDB.Student;
+CREATE TABLE noteDB.Student(
+    numstud int NOT NULL AUTO_INCREMENT,
+    name char(40),
+    firstname char(40),
+    dateofbirth Date,
+    street char(40),
+    postalcode char(10),
+    city char(40),
+    PRIMARY KEY(numstud)
+);
+
+
+DROP TABLE IF EXISTS noteDB.Matter;
+CREATE TABLE noteDB.Matter(
+    codemat char(40),
+    wording char(40),
+    coef float,
+    PRIMARY KEY(codemat) 
+);
+
+
+DROP TABLE IF EXISTS noteDB.Test;
+CREATE TABLE noteDB.Test(
+    numtest int AUTO_INCREMENT,
+    testdate date,
+    place char(40),
+    codemat char(40),
+    PRIMARY KEY(numtest),
+    FOREIGN KEY(codemat) REFERENCES noteDB.Matter(codemat)
+);
+
+
+DROP TABLE IF EXISTS noteDB.Notation;
+CREATE TABLE noteDB.Notation(
+    score float,
+    numstud int,
+    numtest int,
+    FOREIGN KEY(numstud) REFERENCES noteDB.Student(numstud),
+    FOREIGN KEY(numtest) REFERENCES noteDB.Test(numtest)
+);

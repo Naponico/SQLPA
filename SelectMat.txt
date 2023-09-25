@@ -1,0 +1,3 @@
+select matter.wording,CONCAT(round(sum(coef) * 100 / sum(coef) over())," %") as "Pourcentage" from notedb.matter group by WORDING 
+
+select sum(matter.coef) as "Somme des coefficients" from matter

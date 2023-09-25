@@ -1,0 +1,9 @@
+select * from notedb.student;
+
+select * from notedb.student order by student.name DESC;
+
+select student.name,student.firstname from notedb.student where student.city = "Lyon";
+
+select student.name,student.firstname,student.city from notedb.student WHERE student.city LIKE "%LL%"
+
+select student.firstname from notedb.student WHERE student.name REGEXP '((M|m)artin)|((D|d)urand)|((D|d)upont)'
